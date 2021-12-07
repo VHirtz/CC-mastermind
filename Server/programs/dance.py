@@ -1,7 +1,8 @@
 from . import program
 from . import api
 
-class turtle_dance(program.program):
+class dance(program.program):
     def run(self):
-        yield api.turtle.forward()
-        yield "print('hello world')"
+        while True:
+            yield api.turtle.forward()
+            yield "print('hello world')"
