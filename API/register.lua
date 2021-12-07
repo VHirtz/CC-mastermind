@@ -18,4 +18,4 @@ file = fs.open("ip", "w")
 file.write(ip)
 file.close()
 
-http.get(server .. "/pushId", {pcid=tostring(os.getComputerID()), program=args[1]})
+http.get(args[2] .. "/pushId", {pcid=tostring(os.getComputerID()), program=args[1]})
