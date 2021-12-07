@@ -31,6 +31,7 @@ async def pushId(request):
   headers = request.headers.copy()
   pc = computer.Computer()
   pc.state = {}
+  pc.state["pcid"] = headers[pcid]
   pc.state["program"] = headers["program"]
   pc.saveState(headers["pcid"])
   return web.Response()

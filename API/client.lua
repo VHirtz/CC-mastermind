@@ -37,7 +37,7 @@ local function listen()
             print("Please initialize this computer")
             os.shutdown()
         end
-        local f = loadstring(str)
+        local f = loadstring("return " .. str)
         local result = table.pack(f())
         ws.Send(json.stringify(result))
     until false
