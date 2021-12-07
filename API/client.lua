@@ -35,7 +35,8 @@ local function listen()
         local str = ws.Receive()
         if str == " " then
             print("Please initialize this computer")
-            os.shutdown()
+            print("Computer id: " .. os.getComputerID())
+            exit()
         end
         local f = loadstring("return " .. str)
         local result = table.pack(f())
