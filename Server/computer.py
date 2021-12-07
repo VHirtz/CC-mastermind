@@ -4,8 +4,8 @@ import requests
 from aiohttp import web
 
 import programs
-import database
 import json
+import pickle
 
 class Computer:
     def __init__(self):
@@ -13,19 +13,18 @@ class Computer:
         self.state = {}
 
     def saveState(self, pcid):
-        db = database.getDb()
-        json_dump = json.dumps(self.state)
-        binary = ' '.join(format(ord(letter), 'b') for letter in json_dump)
-        db.put(str.encode(pcid), str.encode(binary))
+        file = open("./database/" + str(pcid), "wb")
+        pickle.dump(self.state, file)
+        file.close()
     
     def loadState(self, pcid):
-        db = database.getDb()
-        binary = db.get(str.encode(pcid))
-        if binary == None:
+        try:
+            file = open("./database/" + str(pcid), "rb")
+        except FileNotFoundError:
             return " "
-        else :
-            json_dump = ''.join(chr(int(x, 2)) for x in binary.split())
-            self.state = json.loads(json_dump)
+        state = pickle.load(file)
+        file.close
+        self.state = state
         return None
     
     def run(self, msg):

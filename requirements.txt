@@ -10,7 +10,6 @@ frozenlist==1.2.0
 idna==3.3
 multidict==5.2.0
 pycodestyle==2.8.0
-python-rocksdb==0.7.0
 requests==2.26.0
 toml==0.10.2
 typing-extensions==4.0.1

@@ -42,7 +42,7 @@ def main():
   app.add_routes([web.get('/ws', websocket_handler)])
   app.add_routes([web.get('/pushId', pushId)])
 
-  web.run_app(app, port=80)
+  web.run_app(app, port=5678)
 
 if __name__ == "__main__":
   main()
