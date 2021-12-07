@@ -1,3 +1,5 @@
 local client = require("CC-mastermind.API.client")
 
-client.StartClient()
+pcall(client.StartClient())
+
+os.reboot()

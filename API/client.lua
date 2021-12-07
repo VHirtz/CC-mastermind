@@ -33,7 +33,7 @@ local function listen()
     local close
     repeat
         local str = ws.Receive()
-        if str == "" then
+        if str == " " then
             print("Please initialize this computer")
             os.shutdown()
         end

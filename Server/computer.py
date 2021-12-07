@@ -22,7 +22,7 @@ class Computer:
         db = database.getDb()
         binary = db.get(str.encode(pcid))
         if binary == None:
-            return ""
+            return " "
         else :
             json_dump = ''.join(chr(int(x, 2)) for x in binary.split())
             self.state = json.loads(json_dump)
@@ -34,9 +34,10 @@ class Computer:
             to_send = self.loadState(self.pcid)
             if to_send != None:
                 return to_send
-            self.program_instance = eval("programs." + self.state["program"] + "." + self.state["program"])(self.state)
+            self.object_instance = eval(
+                "programs." + self.state["program"] + "." + self.state["program"])(self.state)
+            self.program_instance = self.object_instance.run()
             self.initialized = True
-        print(msg)
-        self.state["return"] = msg # To be parsed
+        self.state["return"] = json.loads(msg)
         self.saveState(self.pcid)
-        return next(self.program_instance.run())
+        return next(self.program_instance)

@@ -2,7 +2,7 @@ from . import api
 
 class program:
     def __init__(self, reference):
-        self.last_return = reference
+        self.state = reference
     
     def run(self):
         # For testing purposes
