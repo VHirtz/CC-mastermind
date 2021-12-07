@@ -3,14 +3,9 @@ local client = {}
 local ws = require("CC-mastermind.API.ws")
 
 local function resolveIp()
-    local response, err = http.get("http://cc.virgilehirtz.me/")
-
-    if not response  or table.pack(response.getResponseCode())[1] ~= 200 then
-        print("Couldn't retrieve ip")
-        return nil
-    end
-
-    local ip = response.readAll()
+    file = open("ip", "r")
+    local ip = file.readAll()
+    file.close()
     return ip
 end
 
