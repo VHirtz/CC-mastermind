@@ -1,19 +1,5 @@
 local ws = {}
 
-function ws.ConnectSocket(ip)
-    print("Connecting to socket")
-    local err
-    repeat
-        ws.socket, err = http.websocket("ws://" .. ip .. ":80/ws")
-        if not ws.socket then
-            print("Connection failed")
-            print("Retrying in 10 seconds...")
-            os.sleep(10)
-        end
-    until ws.socket
-    print("Connected to socket")
-end
-
 function ws.CloseSocket()
     print("Closing socket...")
     ws.socket.close()
@@ -26,7 +12,7 @@ function ws.Send(msg)
 end
 
 function ws.Receive()
-    local msg, bool = ws.socket.receive(10)
+    local msg, bool = ws.socket.receive()
     if not msg then
         print("Error while waiting for socket")
         print("Rebooting in 10 seconds...")
@@ -37,6 +23,21 @@ function ws.Receive()
     print("Received: " .. msg)
 
     return msg
+end
+
+function ws.ConnectSocket(ip)
+    print("Connecting to socket")
+    local err
+    repeat
+        ws.socket, err = http.websocket("ws://" .. ip .. ":80/ws")
+        if not ws.socket then
+            print("Connection failed")
+            print("Retrying in 10 seconds...")
+            os.sleep(10)
+        end
+    until ws.socket
+    ws.Send(os.getComputerID())
+    print("Connected to socket")
 end
 
 return ws

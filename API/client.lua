@@ -1,5 +1,7 @@
 local client = {}
 
+local ws = require("CC-mastermind.API.ws")
+
 local function resolveIp()
     local response, err = http.get("http://cc.virgilehirtz.me")
 
@@ -33,17 +35,20 @@ local function getIp()
 end
 
 local function listen()
-    local api = require("CC-mastermind.API.api")
     local close
     repeat
-        print("New api call cycle")
-        close = api.Call()
-    until close
+        local str = ws.Receive()
+        if str == "" then
+            print("Please initialize this computer")
+            os.shutdown()
+        end
+        local f = loadstring(str)
+        local result = table.pack(f())
+        ws.Send("Done") -- TODO send back result
+    until false
 end
 
 function client.StartClient()
-    local ws = require("CC-mastermind.API.ws")
-
     local ip = getIp()
     ws.ConnectSocket(ip)
 
