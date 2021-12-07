@@ -1,10 +1,10 @@
-from .. import api
+from . import api
 
-class Program:
+class program:
     def __init__(self, reference):
         self.last_return = reference
     
-    def run():
+    def run(self):
         # For testing purposes
         while True:
-            yield Api.print("Hello world!")
+            yield api.Print("Hello world!")

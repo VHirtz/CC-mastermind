@@ -28,13 +28,18 @@ async def websocket_handler(request):
   return ws
 
 async def pushId(request):
-  pass # TODO 
+  headers = request.headers.copy()
+  pc = computer.Computer()
+  pc.state = {}
+  pc.state["program"] = headers["program"]
+  pc.saveState(headers["pcid"])
+  return web.Response()
 
 def main():
   app = web.Application()
   app.add_routes([web.get('/', ip_resolver)])
   app.add_routes([web.get('/ws', websocket_handler)])
-  app.add_routes([web.get('/pushId', websocket_handler)])
+  app.add_routes([web.get('/pushId', pushId)])
 
   web.run_app(app, port=80)
 

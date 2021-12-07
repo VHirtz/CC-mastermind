@@ -5,6 +5,7 @@ from aiohttp import web
 
 import programs
 import database
+import json
 
 class Computer:
     def __init__(self):
@@ -15,13 +16,13 @@ class Computer:
         db = database.getDb()
         json_dump = json.dumps(self.state)
         binary = ' '.join(format(ord(letter), 'b') for letter in json_dump)
-        db.put(str.encode(pcid), binary)
+        db.put(str.encode(pcid), str.encode(binary))
     
-    async def loadState(self, pcid):
+    def loadState(self, pcid):
         db = database.getDb()
-        binary = db.get(str.encode(self.computerId))
+        binary = db.get(str.encode(pcid))
         if binary == None:
-            print("No state for computer %s" % self.computerId)
+            print("No state for computer %s" % pcid)
             return ""
         else :
             json_dump = ''.join(chr(int(x, 2)) for x in binary.split())
@@ -30,10 +31,12 @@ class Computer:
     
     def run(self, msg):
         if not self.initialized:
-            to_send = self.loadState(msg)
+            self.pcid = msg
+            to_send = self.loadState(self.pcid)
             if to_send != None:
                 return to_send
+            self.program_instance = eval("programs." + self.state["program"] + "." + self.state["program"])(self.state)
+            self.initialized = True
         self.state["return"] = msg # To be parsed
-        program_instance = eval("program." + self.state["program"])(self.state)
-        while True:
-            yield program_instance.run()
+        self.saveState(self.pcid)
+        return next(self.program_instance.run())
