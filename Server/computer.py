@@ -22,7 +22,6 @@ class Computer:
         db = database.getDb()
         binary = db.get(str.encode(pcid))
         if binary == None:
-            print("No state for computer %s" % pcid)
             return ""
         else :
             json_dump = ''.join(chr(int(x, 2)) for x in binary.split())
@@ -37,6 +36,7 @@ class Computer:
                 return to_send
             self.program_instance = eval("programs." + self.state["program"] + "." + self.state["program"])(self.state)
             self.initialized = True
+        print(msg)
         self.state["return"] = msg # To be parsed
         self.saveState(self.pcid)
         return next(self.program_instance.run())

@@ -36,7 +36,7 @@ function ws.ConnectSocket(ip)
             os.sleep(10)
         end
     until ws.socket
-    ws.Send(string(os.getComputerID()))
+    ws.Send(tostring(os.getComputerID()))
     print("Connected to socket")
 end
 

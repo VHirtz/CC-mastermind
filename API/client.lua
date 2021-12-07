@@ -29,6 +29,7 @@ local function getIp()
 end
 
 local function listen()
+    local json = require("CC-mastermind.API.json")
     local close
     repeat
         local str = ws.Receive()
@@ -38,7 +39,7 @@ local function listen()
         end
         local f = loadstring(str)
         local result = table.pack(f())
-        ws.Send("Done") -- TODO send back result
+        ws.Send(json.stringify(result))
     until false
 end
 
