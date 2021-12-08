@@ -29,7 +29,7 @@ function ws.ConnectSocket(ip)
     print("Connecting to socket")
     local err
     repeat
-        ws.socket, err = http.websocket("ws://" .. ip .. ":80/ws")
+        ws.socket, err = http.websocket("ws://" .. ip .. "/ws")
         if not ws.socket then
             print("Connection failed")
             print("Retrying in 10 seconds...")
