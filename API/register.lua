@@ -5,9 +5,10 @@ end
 port = 80
 server = "cc.virgilehirtze.me"
 if #args >= 2 then
-    server = argv[2]
+    server = args[2]
+end
 if #args == 3 then
-    port = argv[3]
+    port = args[3]
 end
 -- resolve ip
 local response, err = http.get("http://" .. server .. ":" .. port)

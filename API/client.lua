@@ -3,7 +3,7 @@ local client = {}
 local ws = require("CC-mastermind.API.ws")
 
 local function resolveIp()
-    file = open("ip", "r")
+    file = fs.open("ip", "r")
     local ip = file.readAll()
     file.close()
     return ip
