@@ -137,7 +137,7 @@ class turtle():
         Engrave signText on signs if provided.
         Collects water or lava if the currently selected slot is an empty bucket.
         """
-        return f"turtle.place({('\"'+ signText +'\"') if signText else ''})"
+        return "turtle.place({('\"'+ signText +'\"') if signText else ''})"
     @staticmethod
     def placeUp():
         """
